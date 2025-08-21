@@ -1,19 +1,31 @@
-The PowerPoint presentation titled "Group E" by Julius Gruber, Yiyang Fan, Tengxiao Fan, and Xiaoliang Liu, appears to focus on analyzing and modeling financial data, specifically relating to yield curves and the stability of certain parameters within these models.
 
-### Key Points from the Presentation:
+# Project: Yield Curve Modeling — Nelson-Siegel vs. Svensson
 
-1. **Glimpse on Data:**
-   - The presentation starts by providing an overview of the data used in the analysis. The details of this data are not explicitly mentioned in the summary slides.
+## Overview
 
-2. **Lambda Parameter Stability:**
-   - **Lambda Not Fixed:** The presentation discusses scenarios where the lambda parameter is not fixed, leading to instability and unpredictability in the model.
-   - **Fixed Lambda (0.47):** The analysis then explores the effect of fixing lambda at 0.47, which results in a more stable model, but with a worse fit to the data.
+This repo accompanies a class presentation comparing yield-curve specifications with a focus on the Nelson–Siegel (NS) family and the extended Svensson model. We study how the decay parameter λ\lambda**λ** affects stability and fit quality, and we evaluate performance during an inverted curve regime.
 
-3. **Inverted Yield Curve:**
-   - The presentation briefly touches on the concept of an inverted yield curve, a phenomenon in finance where long-term debt instruments have a lower yield than short-term ones, often seen as a predictor of economic downturns.
+## Data
 
-4. **Svensson Model:**
-   - The Svensson model, a popular approach for modeling yield curves, is highlighted as both stable and providing a good fit to the data. This model appears to be favored in the presentation for its balance of stability and accuracy.
+* Treasury yield curve snapshots (multiple maturities) used to calibrate term-structure models and assess goodness-of-fit across time.
+* “Glimpse on Data” shows the input cross-section across maturities and dates (see “Best plots” below).
 
-### Conclusion:
-The presentation seems to focus on evaluating different approaches to modeling financial data, particularly in relation to yield curves. It compares the stability and accuracy of models with different treatments of the lambda parameter, ultimately highlighting the Svensson model as an effective approach.
+## Methods
+
+* **Nelson–Siegel (NS)** with two treatments of the decay parameter λ\lambda**λ**:
+  * **Free λ\lambda**λ**:** re-estimated each period → potentially better in-sample fit, but unstable dynamics.
+  * **Fixed λ\lambda**λ**:** held constant (chosen at ~0.47) → more stable factor loadings, slightly worse fit.
+* **Svensson (NS-S)** : adds a second hump term (two decay parameters) to improve flexibility and fit stability.
+
+## Key Findings
+
+* **Free *λ*** : fits can swing and become hard to predict out-of-sample.
+* **Fixed λ≈0.47**  : produces **stable** factors, trading a bit of fit quality for robustness.
+* **Svensson model** : delivers  **both stability and strong fit** , capturing curve shapes (including humps) better than NS.
+* The framework accurately represents an **inverted yield curve** episode and its cross-maturity behavior.
+
+## What’s in this repo
+
+* Calibration code for NS / Svensson
+* Utilities to compare fit metrics (RMSE across maturities) and visualize factor stability
+* Reproducible plots for data snapshots, parameter paths, and fitted vs. actual yields
